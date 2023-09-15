@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:quotes_app/src/config/themes/app_theme.dart';
+import 'package:quotes_app/src/core/utils/app_strings.dart';
 import 'package:quotes_app/src/features/random_quote/presentation/views/quote_view.dart';
 
 class QuoteApp extends StatelessWidget {
@@ -6,11 +8,11 @@ class QuoteApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: QuoteView(),
-      ),
+      title: AppStrings.appTitle,
+      theme: appTheme(),
+      home: const QuoteView(),
     );
   }
 }
