@@ -11,8 +11,8 @@ class AppTextStyle {
   );
 
   static TextStyle appBarTextStyle = TextStyle(
-    fontSize: 20.sp,
+    fontSize: 25.sp,
     fontWeight: FontWeight.bold,
-    color: AppColors.primaryColor,
+    color: AppColors.scaffoldBackgroundColor,
   );
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:quotes_app/src/core/utils/app_colors.dart';
 import 'package:quotes_app/src/core/utils/app_strings.dart';
 import 'package:quotes_app/src/core/utils/app_text_styles.dart';
@@ -11,7 +12,11 @@ ThemeData appTheme() => ThemeData(
       appBarTheme: AppBarTheme(
         centerTitle: true,
         elevation: 0,
-        backgroundColor: AppColors.scaffoldBackgroundColor,
+        backgroundColor: AppColors.primaryColor,
         titleTextStyle: AppTextStyle.appBarTextStyle,
+        iconTheme: IconThemeData(
+          color: AppColors.scaffoldBackgroundColor,
+          size: 28.w,
+        ),
       ),
     );
