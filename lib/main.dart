@@ -9,7 +9,7 @@ void main() {
 
   setSystemUIOverlayStyle();
 
-  runApp(const QuoteApp());
+  runApp(const QuotifyApp());
 }
 
 void setSystemUIOverlayStyle() {

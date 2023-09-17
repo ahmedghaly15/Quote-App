@@ -5,8 +5,8 @@ import 'package:quotes_app/src/config/themes/app_theme.dart';
 import 'package:quotes_app/src/core/utils/app_strings.dart';
 import 'package:reusable_components/reusable_components.dart';
 
-class QuoteApp extends StatelessWidget {
-  const QuoteApp({super.key});
+class QuotifyApp extends StatelessWidget {
+  const QuotifyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
