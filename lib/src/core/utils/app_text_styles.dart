@@ -15,4 +15,20 @@ class AppTextStyle {
     fontWeight: FontWeight.bold,
     color: AppColors.scaffoldBackgroundColor,
   );
+
+  static TextStyle titleErrorTextStyle = TextStyle(
+    fontSize: 20.sp,
+    fontWeight: FontWeight.w700,
+    color: AppColors.primaryColor,
+  );
+  static TextStyle buttonErrorTextStyle = TextStyle(
+    fontSize: 20.sp,
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
+  );
+  static TextStyle subTitleErrorTextStyle = TextStyle(
+    fontSize: 18.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.hintColor,
+  );
 }
