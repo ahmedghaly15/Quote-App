@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:quotes_app/src/features/random_quote/presentation/cubit/random_quote_cubit.dart';
 import 'package:reusable_components/reusable_components.dart';
 
 import '../../../../core/utils/app_colors.dart';
@@ -15,7 +17,7 @@ class RefreshIconButton extends StatelessWidget {
       backgroundColor: AppColors.primaryColor,
       shape: BoxShape.circle,
       icon: Icons.refresh,
-      onTap: () {},
+      onTap: () => BlocProvider.of<RandomQuoteCubit>(context).getRandomQuote(),
       iconColor: Colors.white,
       iconSize: 28.w,
     );

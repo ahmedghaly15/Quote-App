@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:reusable_components/reusable_components.dart';
+import 'package:quotes_app/src/features/random_quote/domain/entities/quote_entity.dart';
 
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_text_styles.dart';
@@ -8,7 +8,8 @@ import 'bookmark_icon.dart';
 import 'frame_circle.dart';
 
 class Quote extends StatelessWidget {
-  const Quote({super.key});
+  const Quote({super.key, required this.quote});
+  final QuoteEntity quote;
 
   @override
   Widget build(BuildContext context) {
@@ -22,32 +23,24 @@ class Quote extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Text(
-            'commodo occaecat mollit est ex aliquip sit laboris. Ea cillum cillum aliqua pariatur aliquip minim mollit cillum minim ad ad eiusmod et. Id eu consequat dolor ipsum.',
+            quote.content,
             style: AppTextStyle.quoteTextStyle,
             textAlign: TextAlign.center,
           ),
           SizedBox(height: 15.h),
-          Padding(
-            padding: EdgeInsets.only(left: SizeConfig.screenWidth! * 0.26),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const FrameCircle(),
-                    SizedBox(width: 4.w),
-                    Text(
-                      'Bill Gates',
-                      style: AppTextStyle.quoteTextStyle,
-                    ),
-                    SizedBox(width: 4.w),
-                    const FrameCircle(),
-                  ],
-                ),
-                const BookmarkIcon(),
-              ],
-            ),
+          Row(
+            children: <Widget>[
+              const FrameCircle(),
+              SizedBox(width: 4.w),
+              Text(
+                quote.author,
+                style: AppTextStyle.quoteTextStyle,
+              ),
+              SizedBox(width: 4.w),
+              const FrameCircle(),
+              const Expanded(child: SizedBox()),
+              const BookmarkIcon(),
+            ],
           ),
         ],
       ),
