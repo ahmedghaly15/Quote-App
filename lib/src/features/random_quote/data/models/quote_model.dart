@@ -1,29 +1,29 @@
-import 'package:quotes_app/src/features/random_quote/domain/entities/quote.dart';
+import 'package:quotes_app/src/features/random_quote/domain/entities/quote_entity.dart';
 
-class QuoteModel extends Quote {
+class QuoteModel extends QuoteEntity {
   const QuoteModel({
     required String author,
     required String content,
-    required String permalink,
-    required int id,
+    required List<String> tags,
+    required String id,
   }) : super(
           author: author,
           id: id,
           content: content,
-          permalink: permalink,
+          tags: tags,
         );
 
   factory QuoteModel.fromJson(Map<String, dynamic> json) => QuoteModel(
+        id: json["_id"],
+        content: json["content"],
         author: json["author"],
-        id: json["id"],
-        content: json["quote"],
-        permalink: json["permalink"],
+        tags: List<String>.from(json["tags"].map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
+        "_id": id,
+        "content": content,
         "author": author,
-        "id": id,
-        "quote": content,
-        "permalink": permalink,
+        "tags": List<dynamic>.from(tags.map((x) => x)),
       };
 }
