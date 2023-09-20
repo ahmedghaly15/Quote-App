@@ -1,8 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:http/http.dart';
+
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:quotes_app/src/core/api/app_interceptors.dart';
+import 'package:quotes_app/src/core/api/dio_consumer.dart';
 import 'package:quotes_app/src/core/network/network_info.dart';
 import 'package:quotes_app/src/core/network/network_info_impl.dart';
 import 'package:quotes_app/src/features/random_quote/data/datasources/fav_datasource.dart';
@@ -17,7 +18,8 @@ import 'package:quotes_app/src/features/random_quote/domain/repositories/quote_r
 import 'package:quotes_app/src/features/random_quote/domain/usecases/get_random_quote.dart';
 import 'package:quotes_app/src/features/random_quote/presentation/cubit/random_quote_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
+
+import 'src/core/api/api_consumer.dart';
 
 final GetIt serviceLocator = GetIt.instance;
 
@@ -55,7 +57,8 @@ Future<void> setUpServiceLocator() async {
 
   // Data Sources
   serviceLocator.registerLazySingleton<RandomQuoteRemoteDataSource>(
-    () => RandomQuoteRemoteDataSourceImpl(client: serviceLocator.get<Client>()),
+    () => RandomQuoteRemoteDataSourceImpl(
+        apiConsumer: serviceLocator.get<ApiConsumer>()),
   );
 
   serviceLocator.registerLazySingleton<RandomQuoteLocalDataSource>(
@@ -77,6 +80,10 @@ Future<void> setUpServiceLocator() async {
     ),
   );
 
+  serviceLocator.registerLazySingleton<ApiConsumer>(
+    () => DioConsumer(client: serviceLocator.get<Dio>()),
+  );
+
   // External:
   final SharedPreferences sharedPreferences =
       await SharedPreferences.getInstance();
@@ -84,7 +91,6 @@ Future<void> setUpServiceLocator() async {
     () => sharedPreferences,
   );
 
-  serviceLocator.registerLazySingleton<Client>(() => http.Client());
   serviceLocator.registerLazySingleton<InternetConnectionChecker>(
     () => InternetConnectionChecker(),
   );
@@ -104,4 +110,5 @@ Future<void> setUpServiceLocator() async {
       error: true,
     ),
   );
+  serviceLocator.registerLazySingleton<Dio>(() => Dio());
 }

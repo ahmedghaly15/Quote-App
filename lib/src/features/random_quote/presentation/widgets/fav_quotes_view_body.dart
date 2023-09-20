@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:quotes_app/src/features/random_quote/presentation/cubit/random_quote_cubit.dart';
 import 'package:quotes_app/src/features/random_quote/presentation/widgets/quote.dart';
@@ -15,10 +14,11 @@ class FavQuotesViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<RandomQuoteCubit, RandomQuoteState>(
       builder: (context, state) {
-        return ListView.separated(
+        return ListView.builder(
+          physics: const BouncingScrollPhysics(),
+          padding: EdgeInsets.zero,
           itemBuilder: (context, index) =>
               Quote(quote: serviceLocator.get<List<QuoteEntity>>()[index]),
-          separatorBuilder: (context, index) => SizedBox(height: 15.h),
           itemCount: serviceLocator.get<List<QuoteEntity>>().length,
         );
       },
