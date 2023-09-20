@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quotes_app/locator.dart';
-import 'package:quotes_app/src/features/favorite_quotes/presentation/views/favorite_quotes.dart';
-import 'package:quotes_app/src/features/random_quote/presentation/cubit/random_quote_cubit.dart';
+
+import 'package:quotes_app/src/features/random_quote/presentation/views/fav_quotes_view.dart';
+
 import 'package:quotes_app/src/features/random_quote/presentation/views/quote_view.dart';
 
 class Routes {
@@ -15,16 +14,12 @@ class AppRoutes {
     switch (routeSettings.name) {
       case Routes.initialRoute:
         return MaterialPageRoute(
-          builder: (context) => BlocProvider(
-            create: (context) =>
-                serviceLocator.get<RandomQuoteCubit>()..getRandomQuote(),
-            child: const QuoteView(),
-          ),
+          builder: (context) => const QuoteView(),
         );
 
       case Routes.favoriteViewRoute:
         return MaterialPageRoute(
-          builder: (context) => const FavoriteQuotesView(),
+          builder: (context) => const FavQuotesView(),
         );
 
       default:

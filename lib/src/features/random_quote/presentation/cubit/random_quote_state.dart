@@ -28,3 +28,19 @@ class RandomQuoteError extends RandomQuoteState {
   @override
   List<Object> get props => [error];
 }
+
+class AddedToFavorite extends RandomQuoteState {
+  final QuoteEntity quote;
+
+  const AddedToFavorite({required this.quote});
+  @override
+  List<Object> get props => [quote];
+}
+
+class RemovedFromFavorite extends RandomQuoteState {
+  final QuoteEntity quote;
+
+  const RemovedFromFavorite({required this.quote});
+  @override
+  List<Object> get props => [quote];
+}

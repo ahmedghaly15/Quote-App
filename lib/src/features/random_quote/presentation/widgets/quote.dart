@@ -39,7 +39,7 @@ class Quote extends StatelessWidget {
               SizedBox(width: 4.w),
               const FrameCircle(),
               const Expanded(child: SizedBox()),
-              const BookmarkIcon(),
+              BookmarkIcon(quote: quote),
             ],
           ),
         ],

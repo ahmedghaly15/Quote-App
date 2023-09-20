@@ -16,7 +16,7 @@ class QuoteViewBody extends StatelessWidget {
     return BlocBuilder<RandomQuoteCubit, RandomQuoteState>(
       builder: (context, state) {
         if (state is RandomQuoteIsLoading) {
-          return SpinKitDoubleBounce(
+          return SpinKitChasingDots(
             color: AppColors.primaryColor,
           );
         } else if (state is RandomQuoteLoaded) {
@@ -28,13 +28,17 @@ class QuoteViewBody extends StatelessWidget {
             ],
           );
         } else if (state is RandomQuoteError) {
-          return const CustomErrorWidget(
-              // onPressed: (){}, TODO:
-              );
+          return CustomErrorWidget(
+            onPressed: () {
+              BlocProvider.of<RandomQuoteCubit>(context).getRandomQuote();
+            },
+          );
         } else {
-          return const CustomErrorWidget(
-              // onPressed: (){}, TODO:
-              );
+          return CustomErrorWidget(
+            onPressed: () {
+              BlocProvider.of<RandomQuoteCubit>(context).getRandomQuote();
+            },
+          );
         }
       },
     );

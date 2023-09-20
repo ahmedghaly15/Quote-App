@@ -3,9 +3,14 @@ import 'package:http/http.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:quotes_app/src/core/network/network_info.dart';
 import 'package:quotes_app/src/core/network/network_info_impl.dart';
+import 'package:quotes_app/src/features/random_quote/data/datasources/fav_datasource.dart';
+import 'package:quotes_app/src/features/random_quote/data/repositories/fav_repo_impl.dart';
+import 'package:quotes_app/src/features/random_quote/domain/repositories/fav_repo.dart';
+
 import 'package:quotes_app/src/features/random_quote/data/datasources/random_quote_local_data_source.dart';
 import 'package:quotes_app/src/features/random_quote/data/datasources/random_quote_remote_date_source.dart';
 import 'package:quotes_app/src/features/random_quote/data/repositories/quote_repo_impl.dart';
+import 'package:quotes_app/src/features/random_quote/domain/entities/quote_entity.dart';
 import 'package:quotes_app/src/features/random_quote/domain/repositories/quote_repo.dart';
 import 'package:quotes_app/src/features/random_quote/domain/usecases/get_random_quote.dart';
 import 'package:quotes_app/src/features/random_quote/presentation/cubit/random_quote_cubit.dart';
@@ -20,6 +25,7 @@ Future<void> setUpServiceLocator() async {
   serviceLocator.registerFactory<RandomQuoteCubit>(
     () => RandomQuoteCubit(
       getRandomQuoteUseCase: serviceLocator.get<GetRandomQuote>(),
+      favRepo: serviceLocator.get<FavRepo>(),
     ),
   );
 
@@ -41,6 +47,10 @@ Future<void> setUpServiceLocator() async {
     ),
   );
 
+  serviceLocator.registerLazySingleton<FavRepo>(
+    () => FavRepoImpl(favDataSource: serviceLocator.get<FavDataSource>()),
+  );
+
   // Data Sources
   serviceLocator.registerLazySingleton<RandomQuoteRemoteDataSource>(
     () => RandomQuoteRemoteDataSourceImpl(client: serviceLocator.get<Client>()),
@@ -49,6 +59,12 @@ Future<void> setUpServiceLocator() async {
   serviceLocator.registerLazySingleton<RandomQuoteLocalDataSource>(
     () => RandomQuoteLocalDataSourceImpl(
       sharedPreferences: serviceLocator.get<SharedPreferences>(),
+    ),
+  );
+
+  serviceLocator.registerLazySingleton<FavDataSource>(
+    () => FavDataSourceImpl(
+      favQuotes: serviceLocator.get<List<QuoteEntity>>(),
     ),
   );
 
@@ -70,4 +86,6 @@ Future<void> setUpServiceLocator() async {
   serviceLocator.registerLazySingleton<InternetConnectionChecker>(
     () => InternetConnectionChecker(),
   );
+
+  serviceLocator.registerLazySingleton<List<QuoteEntity>>(() => []);
 }

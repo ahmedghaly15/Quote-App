@@ -4,7 +4,7 @@ import 'package:quotes_app/src/core/utils/app_colors.dart';
 import 'package:quotes_app/src/core/utils/app_strings.dart';
 import 'package:quotes_app/src/core/utils/app_text_styles.dart';
 
-ThemeData appTheme() => ThemeData(
+ThemeData lightTheme() => ThemeData(
       primaryColor: AppColors.primaryColor,
       hintColor: AppColors.hintColor,
       scaffoldBackgroundColor: AppColors.scaffoldBackgroundColor,

@@ -1,78 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:quotes_app/locator.dart';
 
-class BookmarkIcon extends StatefulWidget {
+import 'package:quotes_app/src/features/random_quote/domain/entities/quote_entity.dart';
+import 'package:quotes_app/src/features/random_quote/presentation/cubit/random_quote_cubit.dart';
+
+class BookmarkIcon extends StatelessWidget {
   const BookmarkIcon({
     super.key,
+    required this.quote,
   });
 
-  @override
-  State<BookmarkIcon> createState() => _BookmarkIconState();
-}
-
-class _BookmarkIconState extends State<BookmarkIcon>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _animationController;
-  late Animation<double> _opacityAnimation;
-
-  @override
-  void initState() {
-    initOpacityAnimation();
-
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
-
-  bool _isBookmarked = false;
+  final QuoteEntity quote;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (_isBookmarked) {
-          setState(() {
-            _isBookmarked = false;
-            _animationController.forward();
+        if (serviceLocator
+            .get<List<QuoteEntity>>()
+            .any((element) => element == quote)) {
+          Future.delayed(const Duration(milliseconds: 700), () {
+            BlocProvider.of<RandomQuoteCubit>(context)
+                .removeFromFav(quote: quote);
+
+            BlocProvider.of<RandomQuoteCubit>(context).getRandomQuote();
           });
         } else {
-          setState(() {
-            _isBookmarked = true;
-            _animationController.reverse();
+          Future.delayed(const Duration(milliseconds: 700), () {
+            BlocProvider.of<RandomQuoteCubit>(context).addToFav(quote: quote);
+            BlocProvider.of<RandomQuoteCubit>(context).getRandomQuote();
           });
         }
       },
-      child: AnimatedOpacity(
-        opacity: _opacityAnimation.value,
-        duration: const Duration(milliseconds: 700),
-        child: Transform.scale(
-          scale: !_isBookmarked ? 1.0 : 1.2,
-          child: Icon(
-            _isBookmarked ? Icons.bookmark : Icons.bookmark_border,
-            color: Colors.white,
-            size: 28.w,
-          ),
-        ),
+      child: Icon(
+        serviceLocator
+                .get<List<QuoteEntity>>()
+                .any((element) => element == quote)
+            ? Icons.bookmark
+            : Icons.bookmark_border,
+        color: Colors.white,
+        size: 28.w,
       ),
     );
-  }
-
-  void initOpacityAnimation() {
-    _animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 500),
-    );
-
-    _opacityAnimation = Tween<double>(
-      end: 1.0,
-      begin: 0.5,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.bounceIn,
-    ));
   }
 }
