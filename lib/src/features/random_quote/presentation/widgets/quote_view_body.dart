@@ -16,7 +16,7 @@ class QuoteViewBody extends StatelessWidget {
     return BlocBuilder<RandomQuoteCubit, RandomQuoteState>(
       builder: (context, state) {
         if (state is RandomQuoteIsLoading) {
-          return SpinKitChasingDots(
+          return SpinKitFadingCircle(
             color: AppColors.primaryColor,
           );
         } else if (state is RandomQuoteLoaded) {
