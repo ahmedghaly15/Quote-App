@@ -17,6 +17,12 @@ import 'package:quotes_app/src/features/random_quote/domain/entities/quote_entit
 import 'package:quotes_app/src/features/random_quote/domain/repositories/quote_repo.dart';
 import 'package:quotes_app/src/features/random_quote/domain/usecases/get_random_quote.dart';
 import 'package:quotes_app/src/features/random_quote/presentation/cubit/random_quote_cubit.dart';
+import 'package:quotes_app/src/features/splash/data/datasources/lang_locale_data_source.dart';
+import 'package:quotes_app/src/features/splash/data/repositories/lang_repo_impl.dart';
+import 'package:quotes_app/src/features/splash/domain/repositories/lang_repository.dart';
+import 'package:quotes_app/src/features/splash/domain/usecases/change_lang.dart';
+import 'package:quotes_app/src/features/splash/domain/usecases/get_saved_lang.dart';
+import 'package:quotes_app/src/features/splash/presentation/cubit/locale_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'src/core/api/api_consumer.dart';
@@ -33,11 +39,27 @@ Future<void> setUpServiceLocator() async {
     ),
   );
 
+  serviceLocator.registerFactory<LocaleCubit>(() => LocaleCubit(
+        getSavedLangUseCase: serviceLocator.get<GetSavedLangUseCase>(),
+        changeLangUseCase: serviceLocator.get<ChangeLangUseCase>(),
+      ));
+
   // UseCases
   serviceLocator.registerLazySingleton<GetRandomQuote>(
     () => GetRandomQuote(
       quoteRepo: serviceLocator.get<QuoteRepo>(),
     ),
+  );
+
+  serviceLocator.registerLazySingleton<GetSavedLangUseCase>(
+    () => GetSavedLangUseCase(
+      langRepository: serviceLocator.get<LangRepository>(),
+    ),
+  );
+
+  serviceLocator.registerLazySingleton<ChangeLangUseCase>(
+    () =>
+        ChangeLangUseCase(langRepository: serviceLocator.get<LangRepository>()),
   );
 
   // Repos
@@ -53,6 +75,12 @@ Future<void> setUpServiceLocator() async {
 
   serviceLocator.registerLazySingleton<FavRepo>(
     () => FavRepoImpl(favDataSource: serviceLocator.get<FavDataSource>()),
+  );
+
+  serviceLocator.registerLazySingleton<LangRepository>(
+    () => LangRepoImpl(
+      langLocaleDataSource: serviceLocator.get<LangLocaleDataSource>(),
+    ),
   );
 
   // Data Sources
@@ -71,6 +99,11 @@ Future<void> setUpServiceLocator() async {
     () => FavDataSourceImpl(
       favQuotes: serviceLocator.get<List<QuoteEntity>>(),
     ),
+  );
+
+  serviceLocator.registerLazySingleton<LangLocaleDataSource>(
+    () => LangLocaleDataSourceImpl(
+        sharedPreferences: serviceLocator.get<SharedPreferences>()),
   );
 
   // Core:

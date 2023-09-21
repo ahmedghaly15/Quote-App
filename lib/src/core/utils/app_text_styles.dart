@@ -3,6 +3,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:quotes_app/src/core/utils/app_colors.dart';
 
 class AppTextStyle {
+  static TextStyle splashTextStyle = TextStyle(
+    color: Colors.white,
+    shadows: <Shadow>[
+      Shadow(
+        color: Colors.black.withOpacity(0.19),
+        offset: const Offset(2, 5),
+      )
+    ],
+    fontSize: 55.sp,
+    fontWeight: FontWeight.w900,
+  );
+
   static TextStyle quoteTextStyle = TextStyle(
     fontSize: 22.sp,
     fontWeight: FontWeight.w500,

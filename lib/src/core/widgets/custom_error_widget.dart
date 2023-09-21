@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:quotes_app/src/config/locale/app_localizations.dart';
 import 'package:quotes_app/src/core/utils/app_colors.dart';
 import 'package:quotes_app/src/core/utils/app_text_styles.dart';
 import 'package:reusable_components/reusable_components.dart';
@@ -26,12 +27,12 @@ class CustomErrorWidget extends StatelessWidget {
           Container(
             margin: EdgeInsets.symmetric(vertical: 12.h),
             child: Text(
-              'Something went wrong',
+              AppLocalizations.of(context)!.translate('something_went_wrong')!,
               style: AppTextStyle.titleErrorTextStyle,
             ),
           ),
           Text(
-            'Please try again later',
+            AppLocalizations.of(context)!.translate('try_again')!,
             style: AppTextStyle.subTitleErrorTextStyle,
           ),
           SizedBox(height: 15.h),
@@ -46,7 +47,7 @@ class CustomErrorWidget extends StatelessWidget {
             hasPrefix: false,
             child: Center(
               child: Text(
-                'Reload Screen',
+                AppLocalizations.of(context)!.translate('reload_screen')!,
                 style: AppTextStyle.buttonErrorTextStyle,
               ),
             ),
